@@ -2,13 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Night — default (matches original portfolio, no FOUC) */
+  --bg-gradient: linear-gradient(135deg, #020208 0%, #0e0e10 50%, #1D1D1F 100%);
+  --accent: #0071e3;
+  --accent-hover: #0077ED;
+  --text-primary: #e4e2e4;
+  --text-secondary: #A1A1A6;
+  --text-muted: #86868B;
+  --text-on-dark: #e4e2e4;
+  --text-on-light: #1D1D1F;
+  --text-secondary-on-dark: #A1A1A6;
+  --text-secondary-on-light: #3a3a4a;
+  --text-muted-on-dark: #86868B;
+  --text-muted-on-light: #6E6E73;
+  --surface: #131315;
+  --surface-dark: #000000;
+  --surface-light: #FFFFFF;
+  --surface-light-container: #F5F5F7;
+  --surface-container: #1f1f21;
+  --surface-container-high: #2a2a2c;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(0, 0, 0, 0.06);
+  --particle-color: rgba(171, 199, 255, 0.15);
+  --hero-glow-1: rgba(0, 113, 227, 0.2);
+  --hero-glow-2: rgba(171, 199, 255, 0.08);
+}
+
 @layer base {
-  html, body {
+  html,
+  body {
     margin: 0;
     padding: 0;
   }
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-gradient);
+    /* Smooth theme transition — 700ms ease as per spec (600-800ms) */
+    transition: background 700ms ease;
+  }
   body {
     overscroll-behavior: none;
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    transition: background 700ms ease, color 700ms ease, border-color 700ms ease;
   }
   main > :first-child {
     margin-top: 0 !important;
@@ -18,11 +55,113 @@
   }
 }
 
+/* Hide scrollbar but keep scroll */
 ::-webkit-scrollbar {
   display: none;
 }
 
-/* Ensure smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Global smooth transitions for theme-aware properties — 700ms ease */
+* {
+  scrollbar-width: none;
+}
+
+/* Theme transition: any element using CSS variables will animate */
+header,
+section,
+footer,
+div,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+a,
+button,
+ul,
+li {
+  transition-property: background-color, background, color, border-color, fill, stroke, box-shadow;
+  transition-duration: 700ms;
+  transition-timing-function: ease;
+}
+
+/* Preserve transform transitions for hover:scale etc — don't override */
+button,
+a {
+  transition-property: background-color, background, color, border-color, fill, stroke, box-shadow, transform, opacity;
+}
+
+/* Ensure Tailwind bg/text utilities that use CSS vars transition */
+.bg-background,
+.bg-surface,
+.bg-canvas-dark,
+.bg-canvas-pure-black,
+.bg-canvas-card-dark,
+.bg-surface-container,
+.bg-surface-container-high,
+.bg-canvas-pure-white,
+.bg-canvas-light-gray,
+.text-on-surface,
+.text-canvas-dark,
+.text-text-secondary-dark,
+.text-text-muted-dark,
+.text-text-muted-light,
+.text-primary,
+.text-primary-container,
+.border-border-dark {
+  transition: background-color 700ms ease, background 700ms ease, color 700ms ease, border-color 700ms ease;
+}
+
+/* Critical overrides: text colors must use text variables, not surface variables, for contrast */
+.text-canvas-dark {
+  color: var(--text-on-light) !important;
+  transition: color 700ms ease;
+}
+.text-canvas-pure-white {
+  color: var(--text-on-dark) !important;
+  transition: color 700ms ease;
+}
+.text-on-surface {
+  color: var(--text-on-dark) !important;
+}
+.text-on-surface-variant {
+  color: var(--text-secondary-on-dark) !important;
+}
+.text-text-secondary-dark {
+  color: var(--text-secondary-on-dark) !important;
+}
+.text-text-muted-dark {
+  color: var(--text-muted-on-dark) !important;
+}
+.text-text-muted-light {
+  color: var(--text-muted-on-light) !important;
+}
+/* Light section muted secondary — ensure correct variable */
+.text-secondary {
+  color: var(--text-secondary-on-dark) !important;
+}
+/* Background overrides to ensure correct surface mapping */
+.bg-canvas-dark {
+  background-color: var(--surface-dark) !important;
+}
+.bg-canvas-pure-black {
+  background-color: var(--surface-dark) !important;
+}
+.bg-canvas-pure-white {
+  background-color: var(--surface-light) !important;
+}
+.bg-canvas-light-gray {
+  background-color: var(--surface-light-container) !important;
+}
+.bg-surface {
+  background-color: var(--surface) !important;
+}
+.bg-surface-container {
+  background-color: var(--surface-container) !important;
+}
+.bg-surface-container-high {
+  background-color: var(--surface-container-high) !important;
+}
+.bg-background {
+  background-color: var(--surface) !important;
 }

@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme/ThemeContext";
+import ThemeSwitcher from "@/components/theme/ThemeSwitcher";
+import ThemedBackground from "@/components/theme/ThemedBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -69,8 +72,13 @@ export default function RootLayout({
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} bg-background font-body-md text-body-md text-on-surface antialiased`}
+        style={{ background: "var(--bg-gradient)", transition: "background 700ms ease, color 700ms ease" }}
       >
-        {children}
+        <ThemeProvider>
+          <ThemedBackground />
+          <ThemeSwitcher />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
