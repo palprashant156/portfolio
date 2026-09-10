@@ -1,0 +1,723 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+export default function Page() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText("palprashant156@gmail.com");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  useEffect(() => {
+    const anchors = document.querySelectorAll('a[href^="#"]');
+    const handler = (e: Event) => {
+      const target = e.currentTarget as HTMLAnchorElement;
+      const id = target.getAttribute("href");
+      if (id && id.length > 1) {
+        e.preventDefault();
+        const el = document.querySelector(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          history.pushState(null, "", id);
+        }
+      }
+    };
+    anchors.forEach((a) => a.addEventListener("click", handler));
+    const sections = Array.from(document.querySelectorAll("section[id]")) as HTMLElement[];
+    const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]')) as HTMLElement[];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = "#" + entry.target.id;
+            navLinks.forEach((l) => {
+              const isActive = l.getAttribute("href") === id;
+              l.classList.toggle("!text-canvas-pure-white", isActive);
+              l.classList.toggle("font-medium", isActive);
+              if (isActive) l.classList.remove("text-text-secondary-dark");
+              else l.classList.add("text-text-secondary-dark");
+            });
+          }
+        });
+      },
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => {
+      anchors.forEach((a) => a.removeEventListener("click", handler));
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <>
+<header className="fixed top-0 left-0 right-0 z-50 bg-canvas-dark/80 backdrop-blur-xl border-b border-white/10"><div className="h-16 max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop flex items-center justify-between"><div className="flex items-center gap-6"><a className="font-title-md text-title-md tracking-tight text-on-surface hover:text-canvas-pure-white transition-colors" data-path="portfolio-overview" href="#">Prashant Pal</a></div><nav className="hidden md:flex items-center gap-8" data-active-classes="text-canvas-pure-white font-medium"><a className="font-body-md text-body-md text-text-secondary-dark hover:text-on-surface transition-colors" data-path="about" href="#about">About</a><a className="font-body-md text-body-md text-text-secondary-dark hover:text-on-surface transition-colors" data-path="projects" href="#projects">Projects</a><a className="font-body-md text-body-md text-text-secondary-dark hover:text-on-surface transition-colors" data-path="experience" href="#experience">Experience</a><a className="font-body-md text-body-md text-text-secondary-dark hover:text-on-surface transition-colors" data-path="skills" href="#skills">Skills</a><a className="font-body-md text-body-md text-text-secondary-dark hover:text-on-surface transition-colors" data-path="contact" href="#contact">Contact</a></nav><div className="flex items-center gap-4"><a className="hidden sm:inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md hover:bg-accent-electric-hover transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]" href="mailto:palprashant156@gmail.com">Get in touch</a><div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><span className="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main className="w-full pt-16 bg-background"><div className="flex flex-col w-full">
+{/* SECTION 1: HERO (Apple Cinematic Dark Space) */}
+<section className="relative w-full overflow-hidden bg-canvas-pure-black py-28 md:py-36 flex flex-col items-center justify-center text-center">
+<div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+<div className="w-[600px] md:w-[900px] h-[360px] md:h-[500px] bg-primary-container/20 rounded-full blur-[130px] opacity-70"></div>
+<div className="w-[300px] md:w-[480px] h-[220px] bg-surface-tint/15 rounded-full blur-[90px] opacity-60"></div>
+</div>
+<div className="relative z-10 max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop flex flex-col items-center">
+<div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-canvas-dark text-primary font-label-sm text-label-sm uppercase tracking-widest mb-6">
+<span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        Full Stack Engineer & System Architect
+      </div>
+<h1 className="font-display-xl text-display-xl tracking-tight text-canvas-pure-white mb-6 max-w-4xl">
+        Prashant Pal.
+      </h1>
+<p className="font-body-lg text-body-lg text-text-secondary-dark max-w-2xl mx-auto mb-10 text-center">
+        Full Stack Developer — Building scalable web applications with React, Node.js & NestJS.
+      </p>
+<div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16">
+<a className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-primary-container text-canvas-pure-white font-title-md text-title-md hover:bg-accent-electric-hover transition-all duration-300 shadow-xl shadow-primary-container/25 hover:scale-[1.02] active:scale-[0.98]" href="#projects">
+          View My Work
+        </a>
+<a className="inline-flex items-center gap-2 font-title-md text-title-md text-primary hover:text-canvas-pure-white transition-colors duration-200 group" href="mailto:palprashant156@gmail.com">
+<span>palprashant156@gmail.com</span>
+<span className="material-symbols-outlined text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">arrow_outward</span>
+</a>
+</div>
+<div className="w-full max-w-3xl rounded-full bg-surface-container-lowest/80 backdrop-blur-md px-6 py-3.5 flex flex-wrap items-center justify-around gap-4 text-text-muted-dark font-label-md text-label-md">
+<div className="flex items-center gap-2">
+<span className="text-primary font-bold">40%</span>
+<span>Backend Stability</span>
+</div>
+<span className="hidden sm:inline text-surface-variant">•</span>
+<div className="flex items-center gap-2">
+<span className="text-primary font-bold">30%</span>
+<span>Memory Overhead Reduced</span>
+</div>
+<span className="hidden sm:inline text-surface-variant">•</span>
+<div className="flex items-center gap-2">
+<span className="text-primary font-bold">40%</span>
+<span>LCP Core Web Vitals Lift</span>
+</div>
+</div>
+</div>
+</section>
+{/* SECTION 2: ABOUT (Gallery-Grade Pure White Editorial) */}
+<section className="w-full bg-canvas-pure-white text-canvas-dark py-24 md:py-32" id="about">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="font-label-md text-label-md uppercase tracking-wider text-primary-container mb-4">
+        Engineering Philosophy
+      </div>
+<h2 className="font-headline-lg text-headline-lg text-canvas-dark max-w-4xl tracking-tight leading-tight mb-16">
+        Speed is a feature. Reliability is the foundation.
+      </h2>
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<div className="lg:col-span-6 flex flex-col gap-6 font-body-lg text-body-lg text-text-muted-light">
+<p>
+            I am a Full Stack Engineer at <strong className="text-canvas-dark font-medium">MediaNv Aidos Pvt Ltd</strong> based in Ahmedabad, architecting mission-critical platforms that balance high-throughput concurrent workloads with pixel-perfect client experiences.
+          </p>
+<p>
+            My daily craft operates across the complete lifecycle — designing zero-friction interfaces in <strong className="text-canvas-dark font-medium">React 19, Next.js, and TypeScript</strong>, while engineering robust distributed backends in <strong className="text-canvas-dark font-medium">NestJS, Node.js, Express, PostgreSQL, and Redis</strong>.
+          </p>
+<p>
+            By anchoring architectural decisions in clean domain-driven patterns, automated CI/CD pipelines, and cloud-native AWS deployments, I deliver systems engineered for fault tolerance, minimal TTFB, and continuous production agility.
+          </p>
+<div className="pt-2 flex flex-wrap gap-2">
+<span className="px-3.5 py-1.5 rounded-full bg-canvas-light-gray font-label-sm text-label-sm text-canvas-dark">PostgreSQL</span>
+<span className="px-3.5 py-1.5 rounded-full bg-canvas-light-gray font-label-sm text-label-sm text-canvas-dark">NestJS</span>
+<span className="px-3.5 py-1.5 rounded-full bg-canvas-light-gray font-label-sm text-label-sm text-canvas-dark">Next.js App Router</span>
+<span className="px-3.5 py-1.5 rounded-full bg-canvas-light-gray font-label-sm text-label-sm text-canvas-dark">AWS ECS/S3</span>
+<span className="px-3.5 py-1.5 rounded-full bg-canvas-light-gray font-label-sm text-label-sm text-canvas-dark">Docker</span>
+</div>
+</div>
+<div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div className="font-display-xl text-display-xl text-canvas-dark font-bold tracking-tight">40%</div>
+<div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium mb-1">Backend Stability</div>
+<div className="font-body-md text-body-md text-text-muted-light">Sustained under peak burst traffic with zero unhandled drop-offs.</div>
+</div>
+</div>
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div className="font-display-xl text-display-xl text-canvas-dark font-bold tracking-tight">30%</div>
+<div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium mb-1">Memory Overhead</div>
+<div className="font-body-md text-body-md text-text-muted-light">Optimized Node.js garbage collection and stream pipelines.</div>
+</div>
+</div>
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div className="font-display-xl text-display-xl text-canvas-dark font-bold tracking-tight">30%</div>
+<div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium mb-1">User Engagement</div>
+<div className="font-body-md text-body-md text-text-muted-light">Instant reactive feedback with sub-50ms UI response times.</div>
+</div>
+</div>
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div className="font-display-xl text-display-xl text-canvas-dark font-bold tracking-tight">40%</div>
+<div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium mb-1">LCP Improvement</div>
+<div className="font-body-md text-body-md text-text-muted-light">Strategic code splitting and edge-rendered asset hydration.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+{/* SECTION 3: FEATURED PROJECTS */}
+<div className="flex flex-col w-full" id="projects">
+{/* Project 1: Dark Canvas (Fraud Monitoring) */}
+<section className="w-full bg-canvas-dark text-on-surface py-24 md:py-32">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div className="lg:col-span-5 flex flex-col">
+<div className="flex items-center gap-2 mb-4">
+<span className="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span className="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-dark">Real-Time Threat Detection</span>
+</div>
+<h3 className="font-headline-lg text-headline-lg text-canvas-pure-white mb-4 tracking-tight">
+              Digital Payment Fraud Monitoring System
+            </h3>
+<p className="font-body-lg text-body-lg text-text-secondary-dark mb-6">
+              Real-time telemetry and risk orchestration engine monitoring high-velocity payment streams, anomalous IP footprints, and automated velocity rule evaluations.
+            </p>
+<div className="p-4 rounded-DEFAULT bg-surface-container mb-6">
+<div className="font-label-sm text-label-sm text-primary uppercase mb-1">Measurable Impact</div>
+<div className="font-title-md text-title-md text-canvas-pure-white font-medium">Reduced fraudulent exposure by 15% across real-time transaction streams.</div>
+</div>
+<div className="flex flex-wrap gap-2 mb-8">
+<span className="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">MongoDB</span>
+<span className="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Express.js</span>
+<span className="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">React.js</span>
+<span className="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Node.js</span>
+<span className="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">WebSocket</span>
+<span className="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">GeoIP</span>
+</div>
+<div>
+<a className="inline-flex items-center gap-2 text-primary font-title-md text-title-md hover:text-canvas-pure-white transition-colors group" href="#contact">
+<span>View System Architecture</span>
+<span className="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform duration-200">arrow_forward</span>
+</a>
+</div>
+</div>
+<div className="lg:col-span-7">
+<div className="rounded-lg bg-surface-container-lowest p-6 md:p-8 shadow-2xl overflow-hidden relative">
+<div className="flex items-center justify-between pb-6 mb-6">
+<div className="flex items-center gap-2">
+<span className="w-3 h-3 rounded-full bg-error/70"></span>
+<span className="w-3 h-3 rounded-full bg-tertiary/70"></span>
+<span className="w-3 h-3 rounded-full bg-primary/70"></span>
+<span className="ml-3 font-label-sm text-label-sm text-text-muted-dark">telemetry.fraud.engine.v2</span>
+</div>
+<span className="px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm">LIVE MONITORING</span>
+</div>
+{/* Inline Mock SVG Telemetry Spark & Nodes */}
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+<div className="p-4 rounded-DEFAULT bg-surface-container">
+<div className="font-label-sm text-label-sm text-text-muted-dark mb-1">Inbound Velocity</div>
+<div className="font-title-lg text-title-lg text-canvas-pure-white font-bold">14,280 txn/s</div>
+<div className="text-primary font-label-sm text-label-sm mt-1">↑ 12% peak surge</div>
+</div>
+<div className="p-4 rounded-DEFAULT bg-surface-container">
+<div className="font-label-sm text-label-sm text-text-muted-dark mb-1">Blocked Exploits</div>
+<div className="font-title-lg text-title-lg text-error font-bold">2,143</div>
+<div className="text-on-surface-variant font-label-sm text-label-sm mt-1">99.98% precision</div>
+</div>
+<div className="p-4 rounded-DEFAULT bg-surface-container">
+<div className="font-label-sm text-label-sm text-text-muted-dark mb-1">Latency Overhead</div>
+<div className="font-title-lg text-title-lg text-primary font-bold">11.4 ms</div>
+<div className="text-on-surface-variant font-label-sm text-label-sm mt-1">Stream pipeline</div>
+</div>
+</div>
+{/* Stream Chart */}
+<div className="rounded-DEFAULT bg-surface-container p-4 mb-4">
+<div className="flex items-center justify-between mb-2">
+<span className="font-label-sm text-label-sm text-text-secondary-dark">Risk Anomaly Detection Threshold</span>
+<span className="font-label-sm text-label-sm text-primary">Dynamic EWMA Filter</span>
+</div>
+<svg className="w-full h-28 text-primary overflow-visible" fill="none" viewBox="0 0 500 100">
+<path d="M0,80 Q50,40 100,65 T200,30 T300,70 T400,20 T500,45" fill="none" stroke="currentColor" strokeWidth="2.5"></path>
+<path d="M0,80 Q50,40 100,65 T200,30 T300,70 T400,20 T500,45 L500,100 L0,100 Z" fill="currentColor" fillOpacity="0.08"></path>
+<circle className="fill-error animate-ping" cx="400" cy="20" r="5"></circle>
+<circle className="fill-error" cx="400" cy="20" r="4"></circle>
+</svg>
+</div>
+<div className="space-y-2 font-label-sm text-label-sm">
+<div className="p-2.5 rounded bg-surface-container-high flex items-center justify-between">
+<div className="flex items-center gap-2">
+<span className="text-error font-bold">[BLOCK]</span>
+<span className="text-on-surface">IP: 185.220.101.5 — Rapid Card Sequence Attempt</span>
+</div>
+<span className="text-text-muted-dark">4ms ago</span>
+</div>
+<div className="p-2.5 rounded bg-surface-container-high flex items-center justify-between">
+<div className="flex items-center gap-2">
+<span className="text-primary font-bold">[CLEAR]</span>
+<span className="text-on-surface">TXN #920194 — 3DS Verified Seamless Checkout</span>
+</div>
+<span className="text-text-muted-dark">12ms ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+{/* Project 2: Light Canvas (Doomscrolling Tracker) */}
+<section className="w-full bg-canvas-pure-white text-canvas-dark py-24 md:py-32">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div className="lg:col-span-7 order-2 lg:order-1">
+<div className="rounded-lg bg-canvas-light-gray p-6 md:p-8 shadow-md">
+<div className="flex items-center justify-between pb-6 mb-6">
+<div className="flex items-center gap-3">
+<span className="material-symbols-outlined text-primary-container">psychology</span>
+<span className="font-title-md text-title-md font-semibold text-canvas-dark">Cognitive Health Session</span>
+</div>
+<span className="font-label-sm text-label-sm px-3 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-medium shadow-sm">Today: 1h 14m</span>
+</div>
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center mb-6">
+{/* SVG Donut Chart for Categories */}
+<div className="flex flex-col items-center justify-center p-4 bg-canvas-pure-white rounded-DEFAULT shadow-sm">
+<svg className="w-36 h-36" viewBox="0 0 36 36">
+<path className="text-border-light" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3.5"></path>
+<path className="text-primary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeDasharray="62, 100" strokeLinecap="round" strokeWidth="3.5"></path>
+<path className="text-tertiary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeDasharray="24, 100" strokeDashoffset="-62" strokeLinecap="round" strokeWidth="3.5"></path>
+</svg>
+<div className="mt-3 text-center">
+<div className="font-headline-sm text-headline-sm font-bold text-canvas-dark">62% Focus</div>
+<div className="font-label-sm text-label-sm text-text-muted-light">Daily Mindfulness Target</div>
+</div>
+</div>
+<div className="space-y-3">
+<div className="p-3 bg-canvas-pure-white rounded-DEFAULT shadow-sm">
+<div className="flex justify-between text-label-sm font-label-sm text-text-muted-light mb-1">
+<span>Social Feeds Intercepted</span>
+<span className="text-canvas-dark font-semibold">18 triggers</span>
+</div>
+<div className="w-full h-1.5 bg-canvas-light-gray rounded-full overflow-hidden">
+<div className="h-full bg-primary-container w-[72%]"></div>
+</div>
+</div>
+<div className="p-3 bg-canvas-pure-white rounded-DEFAULT shadow-sm">
+<div className="flex justify-between text-label-sm font-label-sm text-text-muted-light mb-1">
+<span>Bedtime Wind-down Strictness</span>
+<span className="text-canvas-dark font-semibold">94% active</span>
+</div>
+<div className="w-full h-1.5 bg-canvas-light-gray rounded-full overflow-hidden">
+<div className="h-full bg-tertiary-container w-[94%]"></div>
+</div>
+</div>
+<div className="p-3 bg-canvas-pure-white rounded-DEFAULT shadow-sm">
+<div className="flex justify-between text-label-sm font-label-sm text-text-muted-light mb-1">
+<span>Restored Attention Hours</span>
+<span className="text-canvas-dark font-semibold">+2.4 hrs/day</span>
+</div>
+<div className="w-full h-1.5 bg-canvas-light-gray rounded-full overflow-hidden">
+<div className="h-full bg-primary-container w-[85%]"></div>
+</div>
+</div>
+</div>
+</div>
+<div className="p-4 rounded-DEFAULT bg-canvas-pure-white flex items-center justify-between shadow-sm">
+<div className="flex items-center gap-3">
+<span className="material-symbols-outlined text-primary-container">lock_clock</span>
+<span className="font-body-md text-body-md text-canvas-dark font-medium">Automatic Micro-Break Interventions</span>
+</div>
+<span className="px-3 py-1 rounded-full bg-primary-fixed font-label-sm text-label-sm text-on-primary-fixed font-semibold">ENABLED</span>
+</div>
+</div>
+</div>
+<div className="lg:col-span-5 flex flex-col order-1 lg:order-2">
+<span className="font-label-sm text-label-sm uppercase tracking-wider text-primary-container mb-4">Habit & Attention Engineering</span>
+<h3 className="font-headline-lg text-headline-lg text-canvas-dark mb-4 tracking-tight">
+              Doomscrolling Tracker Analytics App
+            </h3>
+<p className="font-body-lg text-body-lg text-text-muted-light mb-6">
+              MERN-stack behavioral mental wellness platform featuring passive screen-time interception, circadian usage trend analytics, and reactive habit reinforcement engines.
+            </p>
+<div className="p-4 rounded-DEFAULT bg-canvas-light-gray mb-6">
+<div className="font-label-sm text-label-sm text-primary-container uppercase mb-1">Measurable Impact</div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium">+21% sustained user engagement and conscious habit formation.</div>
+</div>
+<div className="flex flex-wrap gap-2 mb-8">
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">React.js</span>
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">Node.js</span>
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">Express.js</span>
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">MongoDB</span>
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">Tailwind CSS</span>
+</div>
+<div>
+<a className="inline-flex items-center gap-2 text-primary-container font-title-md text-title-md hover:text-accent-electric-hover transition-colors group" href="#contact">
+<span>View Behavioral Metrics</span>
+<span className="material-symbols-outlined text-primary-container group-hover:translate-x-1 transition-transform duration-200">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+{/* Project 3: Dark Obsidian (Fuel Reservation) */}
+<section className="w-full bg-surface-container-lowest text-on-surface py-24 md:py-32">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div className="lg:col-span-5 flex flex-col">
+<span className="font-label-sm text-label-sm uppercase tracking-wider text-secondary mb-4">Logistics & Scheduling Engine</span>
+<h3 className="font-headline-lg text-headline-lg text-canvas-pure-white mb-4 tracking-tight">
+              Daily Fuel Reservation Analytics
+            </h3>
+<p className="font-body-lg text-body-lg text-text-secondary-dark mb-6">
+              End-to-end fuel pre-booking and inventory allocation platform with automated invoice reconciliation, pump queue predictive analytics, and regional demand forecasting.
+            </p>
+<div className="p-4 rounded-DEFAULT bg-surface-container mb-6">
+<div className="font-label-sm text-label-sm text-primary uppercase mb-1">Measurable Impact</div>
+<div className="font-title-md text-title-md text-canvas-pure-white font-medium">+35% user interaction surge and fully automated reservation scheduling.</div>
+</div>
+<div className="flex flex-wrap gap-2 mb-8">
+<span className="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">React.js</span>
+<span className="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Node.js</span>
+<span className="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Express.js</span>
+<span className="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">MongoDB</span>
+<span className="px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Vercel</span>
+</div>
+<div>
+<a className="inline-flex items-center gap-2 text-primary font-title-md text-title-md hover:text-canvas-pure-white transition-colors group" href="#contact">
+<span>View System Architecture</span>
+<span className="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform duration-200">arrow_forward</span>
+</a>
+</div>
+</div>
+<div className="lg:col-span-7">
+<div className="rounded-lg bg-surface-container p-6 md:p-8 shadow-2xl">
+<div className="flex items-center justify-between pb-6 mb-6">
+<div>
+<div className="font-title-md text-title-md text-canvas-pure-white font-medium">Terminal Station Node #04</div>
+<div className="font-label-sm text-label-sm text-text-muted-dark">Ahmedabad Logistics Corridor</div>
+</div>
+<span className="px-3 py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm">AUTONOMOUS SYNC</span>
+</div>
+{/* Bay Allocation Grid */}
+<div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+<div className="p-3.5 rounded-DEFAULT bg-surface-container-high text-center">
+<div className="font-label-sm text-label-sm text-text-muted-dark">BAY 01</div>
+<div className="font-title-md text-title-md text-primary font-semibold mt-1">BUSY</div>
+<div className="font-label-sm text-label-sm text-text-secondary-dark mt-0.5">3m rem</div>
+</div>
+<div className="p-3.5 rounded-DEFAULT bg-surface-container-high text-center">
+<div className="font-label-sm text-label-sm text-text-muted-dark">BAY 02</div>
+<div className="font-title-md text-title-md text-canvas-pure-white font-semibold mt-1">READY</div>
+<div className="font-label-sm text-label-sm text-primary mt-0.5">Assigned</div>
+</div>
+<div className="p-3.5 rounded-DEFAULT bg-surface-container-high text-center">
+<div className="font-label-sm text-label-sm text-text-muted-dark">BAY 03</div>
+<div className="font-title-md text-title-md text-canvas-pure-white font-semibold mt-1">READY</div>
+<div className="font-label-sm text-label-sm text-text-muted-dark mt-0.5">Open Slot</div>
+</div>
+<div className="p-3.5 rounded-DEFAULT bg-surface-container-high text-center">
+<div className="font-label-sm text-label-sm text-text-muted-dark">BAY 04</div>
+<div className="font-title-md text-title-md text-tertiary font-semibold mt-1">DRAIN</div>
+<div className="font-label-sm text-label-sm text-text-muted-dark mt-0.5">Refill</div>
+</div>
+</div>
+{/* Inventory Bar */}
+<div className="p-4 rounded-DEFAULT bg-surface-container-high mb-4">
+<div className="flex justify-between font-label-sm text-label-sm text-on-surface mb-2">
+<span>ULSD Bulk Storage Reservoir</span>
+<span>78,400 L / 90,000 L</span>
+</div>
+<div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div className="h-full bg-primary w-[87%]"></div>
+</div>
+</div>
+<div className="p-3.5 rounded-DEFAULT bg-surface-container-high flex items-center justify-between font-label-sm text-label-sm">
+<div className="flex items-center gap-2 text-on-surface">
+<span className="material-symbols-outlined text-primary text-[18px]">receipt_long</span>
+<span>Auto-dispatched e-Invoice: #FL-2025-88319</span>
+</div>
+<span className="text-text-muted-dark">Instant PDF / SMS</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+{/* Project 4: Light Canvas (Quick Serve Marketplace) */}
+<section className="w-full bg-canvas-pure-white text-canvas-dark py-24 md:py-32">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div className="lg:col-span-7 order-2 lg:order-1">
+<div className="rounded-lg bg-canvas-light-gray p-6 md:p-8 shadow-md">
+<div className="flex items-center justify-between pb-6 mb-6">
+<div>
+<div className="font-title-md text-title-md font-semibold text-canvas-dark">Quick Serve Dispatch</div>
+<div className="font-label-sm text-label-sm text-text-muted-light">Instant Contractor Matching Engine</div>
+</div>
+<span className="px-3 py-1 rounded-full bg-canvas-pure-white text-primary-container font-label-sm text-label-sm font-semibold shadow-sm">MATCHED • 98.4%</span>
+</div>
+<div className="space-y-3">
+<div className="p-4 rounded-DEFAULT bg-canvas-pure-white flex items-center justify-between shadow-sm">
+<div className="flex items-center gap-4">
+<div className="w-10 h-10 rounded-full bg-canvas-light-gray flex items-center justify-center font-bold text-primary-container">
+<span className="material-symbols-outlined">person</span>
+</div>
+<div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium flex items-center gap-2">
+<span>Aarav Mehta</span>
+<span className="material-symbols-outlined text-primary-container text-[18px]">verified</span>
+</div>
+<div className="font-label-sm text-label-sm text-text-muted-light">HVAC & Electrical Specialist • 4.96 ★ (142 reviews)</div>
+</div>
+</div>
+<button className="px-4 py-1.5 rounded-full bg-primary-container text-canvas-pure-white font-label-md text-label-md hover:bg-accent-electric-hover transition-colors">
+                    Dispatch
+                  </button>
+</div>
+<div className="p-4 rounded-DEFAULT bg-canvas-pure-white flex items-center justify-between shadow-sm">
+<div className="flex items-center gap-4">
+<div className="w-10 h-10 rounded-full bg-canvas-light-gray flex items-center justify-center font-bold text-primary-container">
+<span className="material-symbols-outlined">person</span>
+</div>
+<div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium flex items-center gap-2">
+<span>Priya Soni</span>
+<span className="material-symbols-outlined text-primary-container text-[18px]">verified</span>
+</div>
+<div className="font-label-sm text-label-sm text-text-muted-light">Commercial Barista & Catering • 4.91 ★ (88 reviews)</div>
+</div>
+</div>
+<button className="px-4 py-1.5 rounded-full bg-primary-container text-canvas-pure-white font-label-md text-label-md hover:bg-accent-electric-hover transition-colors">
+                    Dispatch
+                  </button>
+</div>
+</div>
+<div className="mt-4 p-3 rounded-DEFAULT bg-canvas-pure-white flex items-center justify-between text-label-sm font-label-sm text-text-muted-light shadow-sm">
+<span>Average Contractor ETA: <strong className="text-canvas-dark">18 mins</strong></span>
+<span>Direct Stripe Micro-Payouts</span>
+</div>
+</div>
+</div>
+<div className="lg:col-span-5 flex flex-col order-1 lg:order-2">
+<span className="font-label-sm text-label-sm uppercase tracking-wider text-primary-container mb-4">On-Demand Talent Platform</span>
+<h3 className="font-headline-lg text-headline-lg text-canvas-dark mb-4 tracking-tight">
+              Quick Serve
+            </h3>
+<p className="font-body-lg text-body-lg text-text-muted-light mb-6">
+              High-responsiveness marketplace matching local businesses with pre-vetted contractors through instant geo-query matching, direct rating pipelines, and frictionless booking.
+            </p>
+<div className="p-4 rounded-DEFAULT bg-canvas-light-gray mb-6">
+<div className="font-label-sm text-label-sm text-primary-container uppercase mb-1">Measurable Impact</div>
+<div className="font-title-md text-title-md text-canvas-dark font-medium">+22% user retention through intuitive job discovery UI and instant booking flows.</div>
+</div>
+<div className="flex flex-wrap gap-2 mb-8">
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">React.js</span>
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">Node.js</span>
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">MongoDB</span>
+<span className="px-3 py-1 rounded-full bg-canvas-light-gray text-canvas-dark font-label-sm text-label-sm">RESTful APIs</span>
+</div>
+<div>
+<a className="inline-flex items-center gap-2 text-primary-container font-title-md text-title-md hover:text-accent-electric-hover transition-colors group" href="#contact">
+<span>View Marketplace Architecture</span>
+<span className="material-symbols-outlined text-primary-container group-hover:translate-x-1 transition-transform duration-200">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+{/* SECTION 4: EXPERIENCE TIMELINE */}
+<section className="w-full bg-canvas-dark text-on-surface py-24 md:py-32" id="experience">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="text-center max-w-2xl mx-auto mb-20">
+<span className="font-label-md text-label-md uppercase tracking-wider text-primary mb-2 block">Career Milestones</span>
+<h2 className="font-headline-lg text-headline-lg text-canvas-pure-white tracking-tight">Professional Experience</h2>
+</div>
+<div className="relative max-w-3xl mx-auto">
+{/* Center glowing track line */}
+<div className="absolute top-0 bottom-0 left-4 md:left-1/2 w-0.5 -translate-x-1/2 bg-surface-variant"></div>
+<div className="space-y-16">
+{/* Item 1 */}
+<div className="relative flex flex-col md:flex-row items-start">
+<div className="md:w-1/2 pl-12 md:pl-0 md:pr-12 md:text-right">
+<div className="inline-block px-3 py-1 rounded-full bg-primary-container/20 text-primary font-label-sm text-label-sm font-semibold mb-2">
+                Dec 2025 – Present
+              </div>
+<div className="font-title-lg text-title-lg text-canvas-pure-white font-semibold">MediaNv Aidos Pvt Ltd</div>
+<div className="font-body-md text-body-md text-secondary mb-3">Full Stack Engineer</div>
+<p className="font-body-md text-body-md text-text-secondary-dark">
+                Architecting core NestJS and Node.js microservices with PostgreSQL. Scaling high-load transactional systems, streamlining automated cloud CI/CD pipelines, and driving infrastructure modernization across AWS.
+              </p>
+</div>
+<div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/50 ring-4 ring-canvas-dark"></div>
+<div className="hidden md:block md:w-1/2 pl-12"></div>
+</div>
+{/* Item 2 */}
+<div className="relative flex flex-col md:flex-row items-start">
+<div className="hidden md:block md:w-1/2 pr-12"></div>
+<div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-surface-bright shadow-lg ring-4 ring-canvas-dark"></div>
+<div className="md:w-1/2 pl-12">
+<div className="inline-block px-3 py-1 rounded-full bg-surface-container-high text-text-secondary-dark font-label-sm text-label-sm font-semibold mb-2">
+                May 2024 – Nov 2024
+              </div>
+<div className="font-title-lg text-title-lg text-canvas-pure-white font-semibold">My Virtual Team</div>
+<div className="font-body-md text-body-md text-secondary mb-3">Full Stack Developer</div>
+<p className="font-body-md text-body-md text-text-secondary-dark">
+                Engineered responsive single-page web applications utilizing React.js, Express, and MongoDB. Optimized database query performance and streamlined reusable UI component libraries for multi-tenant deployment.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+{/* SECTION 5: SKILLS MATRIX */}
+<section className="w-full bg-canvas-pure-white text-canvas-dark py-24 md:py-32" id="skills">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="text-center max-w-2xl mx-auto mb-16">
+<span className="font-label-md text-label-md uppercase tracking-wider text-primary-container mb-2 block">Capability Matrix</span>
+<h2 className="font-headline-lg text-headline-lg text-canvas-dark tracking-tight">Technical Expertise & Architecture</h2>
+</div>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+{/* Frontend */}
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div>
+<div className="w-12 h-12 rounded-full bg-canvas-pure-white flex items-center justify-center text-primary-container shadow-sm mb-6">
+<span className="material-symbols-outlined text-[24px]">terminal</span>
+</div>
+<div className="font-title-lg text-title-lg text-canvas-dark font-semibold mb-3">Frontend</div>
+<p className="font-body-md text-body-md text-text-muted-light mb-6">Reactive, edge-rendered user interfaces with strict type guarantees.</p>
+</div>
+<div className="flex flex-wrap gap-2">
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">React 19</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Next.js</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Angular</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">TypeScript</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Tailwind CSS</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">HTML5/CSS3</span>
+</div>
+</div>
+{/* Backend */}
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div>
+<div className="w-12 h-12 rounded-full bg-canvas-pure-white flex items-center justify-center text-primary-container shadow-sm mb-6">
+<span className="material-symbols-outlined text-[24px]">dns</span>
+</div>
+<div className="font-title-lg text-title-lg text-canvas-dark font-semibold mb-3">Backend</div>
+<p className="font-body-md text-body-md text-text-muted-light mb-6">High-throughput microservices and streaming event architectures.</p>
+</div>
+<div className="flex flex-wrap gap-2">
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Node.js</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">NestJS</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Express.js</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">REST APIs</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">WebSockets</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">JWT Auth</span>
+</div>
+</div>
+{/* Databases */}
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div>
+<div className="w-12 h-12 rounded-full bg-canvas-pure-white flex items-center justify-center text-primary-container shadow-sm mb-6">
+<span className="material-symbols-outlined text-[24px]">database</span>
+</div>
+<div className="font-title-lg text-title-lg text-canvas-dark font-semibold mb-3">Databases</div>
+<p className="font-body-md text-body-md text-text-muted-light mb-6">Relational and document schemas built for high concurrent write volumes.</p>
+</div>
+<div className="flex flex-wrap gap-2">
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">PostgreSQL</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">MongoDB</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Data Modeling</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Query Plan Tuning</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Index Optimization</span>
+</div>
+</div>
+{/* Cloud & DevOps */}
+<div className="rounded-lg bg-canvas-light-gray p-8 flex flex-col justify-between shadow-sm">
+<div>
+<div className="w-12 h-12 rounded-full bg-canvas-pure-white flex items-center justify-center text-primary-container shadow-sm mb-6">
+<span className="material-symbols-outlined text-[24px]">cloud_sync</span>
+</div>
+<div className="font-title-lg text-title-lg text-canvas-dark font-semibold mb-3">Cloud & DevOps</div>
+<p className="font-body-md text-body-md text-text-muted-light mb-6">Continuous integration, immutable containers, and edge distribution.</p>
+</div>
+<div className="flex flex-wrap gap-2">
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">AWS (EC2, S3)</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Docker</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">GitHub Actions</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Render</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Vercel</span>
+<span className="px-2.5 py-1 rounded-full bg-canvas-pure-white text-canvas-dark font-label-sm text-label-sm shadow-sm">Netlify</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+{/* SECTION 6: CERTIFICATIONS STRIP */}
+<section className="w-full bg-canvas-dark py-12">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop">
+<div className="flex flex-wrap justify-center items-center gap-8 md:gap-14 font-label-md text-label-md text-text-secondary-dark">
+<div className="flex items-center gap-2 hover:text-canvas-pure-white transition-colors">
+<span className="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>AWS Cloud (Coursera)</span>
+</div>
+<div className="flex items-center gap-2 hover:text-canvas-pure-white transition-colors">
+<span className="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>IBM Cloud Essentials (edX)</span>
+</div>
+<div className="flex items-center gap-2 hover:text-canvas-pure-white transition-colors">
+<span className="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>Offensive Penetration Testing (Cybrary)</span>
+</div>
+<div className="flex items-center gap-2 hover:text-canvas-pure-white transition-colors">
+<span className="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span>Python Data Science (Coursera)</span>
+</div>
+</div>
+</div>
+</section>
+{/* SECTION 7: CONTACT / OUTRO */}
+<section className="w-full bg-canvas-pure-black py-28 md:py-36 text-center" id="contact">
+<div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop flex flex-col items-center">
+<span className="font-label-md text-label-md uppercase tracking-wider text-primary mb-4 block">Get in Touch</span>
+<h2 className="font-headline-lg text-headline-lg text-canvas-pure-white tracking-tight mb-6 max-w-2xl">
+        Let’s build something great.
+      </h2>
+<p className="font-body-lg text-body-lg text-text-secondary-dark max-w-xl mb-12">
+        Available for full stack engineering leadership, complex system design engagements, and high-performance product development.
+      </p>
+<div className="inline-flex flex-col sm:flex-row items-center gap-4 mb-10">
+<div className="flex items-center gap-2 px-6 py-3 rounded-full bg-surface-container">
+<a className="font-title-md text-title-md text-canvas-pure-white hover:text-primary transition-colors" href="mailto:palprashant156@gmail.com">
+            palprashant156@gmail.com
+          </a>
+<button
+                onClick={handleCopy}
+                className="ml-2 px-3 py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm hover:bg-surface-bright transition-colors"
+                title="Copy to clipboard"
+              >
+                <span>{copied ? "Copied!" : "Copy"}</span>
+              </button>
+</div>
+<a className="px-8 py-3.5 rounded-full bg-primary-container text-canvas-pure-white font-title-md text-title-md hover:bg-accent-electric-hover transition-all duration-200 shadow-lg shadow-primary-container/20" href="mailto:palprashant156@gmail.com">
+          Send Email
+        </a>
+</div>
+<div className="flex items-center gap-4 font-label-md text-label-md">
+<a className="px-5 py-2.5 rounded-full bg-surface-container text-text-secondary-dark hover:text-canvas-pure-white hover:bg-surface-container-high transition-all flex items-center gap-2" href="https://linkedin.com" rel="noreferrer" target="_blank">
+<span>LinkedIn</span>
+<span className="material-symbols-outlined text-[16px]">arrow_outward</span>
+</a>
+<a className="px-5 py-2.5 rounded-full bg-surface-container text-text-secondary-dark hover:text-canvas-pure-white hover:bg-surface-container-high transition-all flex items-center gap-2" href="https://github.com" rel="noreferrer" target="_blank">
+<span>GitHub</span>
+<span className="material-symbols-outlined text-[16px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</section>
+</div></main><footer className="w-full bg-canvas-card-dark border-t border-border-dark"><div className="max-w-[75rem] mx-auto px-gutter-mobile md:px-gutter-desktop py-12 md:py-16"><div className="flex items-center gap-2 pb-8 border-b border-border-dark text-label-sm font-label-sm text-text-muted-dark"><a className="hover:text-on-surface transition-colors" href="#">Portfolio</a><span>/</span><span className="text-on-surface-variant">Prashant Pal</span><span>/</span><span className="text-on-surface">Full Stack Engineer</span></div><div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-10 border-b border-border-dark"><div><div className="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-4">Featured Systems</div><ul className="space-y-3 font-body-md text-body-md text-text-secondary-dark"><li><a className="hover:text-primary transition-colors" href="#projects">Fraud Monitoring Platform</a></li><li><a className="hover:text-primary transition-colors" href="#projects">Doomscrolling Analytics Engine</a></li><li><a className="hover:text-primary transition-colors" href="#projects">Daily Fuel Logistics</a></li><li><a className="hover:text-primary transition-colors" href="#projects">Quick Serve Microservices</a></li></ul></div><div><div className="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-4">Core Engineering Stack</div><ul className="space-y-3 font-body-md text-body-md text-text-secondary-dark"><li><span className="hover:text-on-surface transition-colors">Node.js & NestJS Architecture</span></li><li><span className="hover:text-on-surface transition-colors">React 19 & Next.js App Router</span></li><li><span className="hover:text-on-surface transition-colors">PostgreSQL & Redis Caching</span></li><li><span className="hover:text-on-surface transition-colors">AWS Infrastructure & Docker</span></li></ul></div><div><div className="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-4">Connect & Dispatch</div><ul className="space-y-3 font-body-md text-body-md text-text-secondary-dark"><li><a className="hover:text-on-surface transition-colors flex items-center gap-2" href="https://github.com" rel="noreferrer" target="_blank">GitHub</a></li><li><a className="hover:text-on-surface transition-colors flex items-center gap-2" href="https://linkedin.com" rel="noreferrer" target="_blank">LinkedIn</a></li><li><a className="hover:text-on-surface transition-colors flex items-center gap-2" href="mailto:palprashant156@gmail.com">palprashant156@gmail.com</a></li></ul></div></div><div className="pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-label-sm text-label-sm text-text-muted-dark"><div>Copyright © 2025 Prashant Pal. All rights reserved. Built with precision & performance in mind.</div><div className="flex items-center gap-6"><a className="hover:text-on-surface transition-colors" href="#">Architecture Blueprint</a><a className="hover:text-on-surface transition-colors" href="#">Telemetry & Privacy</a><a className="hover:text-on-surface transition-colors" href="#">Sitemap</a></div></div></div></footer>
+
+
+    </>
+  );
+}
